@@ -1,7 +1,7 @@
-https://yuxinli1.github.io/blog/2022/08/17/Svg%E6%8F%92%E5%85%A5Latex%E5%90%8E%E6%89%80%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/
-https://yuxinli1.github.io/blog/about/index.html
-https://yuxinli1.github.io/blog
-https://yuxinli1.github.io/blog/tags/Latex1/
-https://yuxinli1.github.io/blog/tags/%E6%8E%92%E7%89%88/
-https://yuxinli1.github.io/blog/categories/Latex/
-https://yuxinli1.github.io/blog/categories/Latex/lat/
+https://yuxinli1.github.io/2022/08/17/Svg%E6%8F%92%E5%85%A5Latex%E5%90%8E%E6%89%80%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/
+https://yuxinli1.github.io/about/index.html
+https://yuxinli1.github.io/
+https://yuxinli1.github.io/tags/Latex1/
+https://yuxinli1.github.io/tags/%E6%8E%92%E7%89%88/
+https://yuxinli1.github.io/categories/Latex/
+https://yuxinli1.github.io/categories/Latex/lat/

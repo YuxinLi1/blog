@@ -4,9 +4,9 @@
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Yuxin&#39;s Blog</title>
-    <link>https://yuxinli1.github.io/blog/</link>
+    <link>https://yuxinli1.github.io/</link>
     
-    <atom:link href="https://yuxinli1.github.io/blog/atom.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://yuxinli1.github.io/atom.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
     <pubDate>Wed, 17 Aug 2022 06:57:26 GMT</pubDate>
@@ -14,8 +14,8 @@
     
     <item>
       <title>Svg插入Latex后所遇到的问题</title>
-      <link>https://yuxinli1.github.io/blog/2022/08/17/Svg%E6%8F%92%E5%85%A5Latex%E5%90%8E%E6%89%80%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-      <guid>https://yuxinli1.github.io/blog/2022/08/17/Svg%E6%8F%92%E5%85%A5Latex%E5%90%8E%E6%89%80%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <link>https://yuxinli1.github.io/2022/08/17/Svg%E6%8F%92%E5%85%A5Latex%E5%90%8E%E6%89%80%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <guid>https://yuxinli1.github.io/2022/08/17/Svg%E6%8F%92%E5%85%A5Latex%E5%90%8E%E6%89%80%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
       <pubDate>Wed, 17 Aug 2022 06:06:03 GMT</pubDate>
       
         
@@ -30,17 +30,17 @@
       <content:encoded><![CDATA[<ul><li><p>若要使用package svg，需要<code>\usepackage&#123;svg&#125;</code>。但是要注意，这里需要一个参数<code>\usepackage[inkscapelatex=false]&#123;svg&#125;</code>，否则svg可能不会按照正确的格式编译出来</p></li><li><p>使用ProcessOn导出的svg，应该其编码存在一些问题，导致使用<code>\includesvg&#123;&#125;</code>插入latex后流程图节点的框线无法显示出来。在一切默认的情况下，ProcessOn导出的svg中，框线的颜色设置为<code>stroke=&quot;rgba(50,50,50,1)&quot;</code>，latex或者其他的如PowerPoint之类的可能无法正确识别<code>rgba</code>，所以需要将<code>rgba</code>的颜色改为<code>rgb</code>，可以设置为黑色<code>stroke=&quot;rgb(0,0,0)&quot;</code>，这样使用<code>\includesvg&#123;&#125;</code>插入后框线的颜色可以显示出来（对比draw.io和ProcessOn导出的svg格式后发现）。</p><pre class="highlight"><code class="c">&#123; &#123;&#125;a = a + <span class="hljs-number">1</span>&#125;</code></pre></li><li><p>如果是在svg中指定了字体，插入latex(overleaf)后可能因为无法识别或没有这种字体而导致编译后字体格式不正确。这种情况下，对于Ubuntu，可以先安装一个库：inkscape</p></li></ul><pre class="highlight"><code class="shell">sudo apt install inkscapesudo apt install libcanberra-gtk-module</code></pre><p>然后在本地先使用inkscape将svg编译成pdf：</p><pre class="highlight"><code class="shell">inkscape -z -D --file=&lt;.svg file&gt; --export-pdf=&lt;.pdf file name&gt;<span class="hljs-meta prompt_"># </span><span class="language-bash">such as</span><span class="hljs-meta prompt_"># </span><span class="language-bash">inkscape -z -D --file=main.svg --export-pdf=main.pdf</span><span class="hljs-meta prompt_"># </span><span class="language-bash">-D, --export-area-drawing                  导出区域是整个绘图(不是页面)</span><span class="hljs-meta prompt_"># </span><span class="language-bash">-z, --without-gui                          不使用 X</span><span class="hljs-meta prompt_"># </span><span class="language-bash">                                           服务器(只通过控制台处理文件)</span></code></pre><p>然后在latex中使用<code>\includegraphics[width=?]&#123;pdf path&#125;</code>，例如</p><pre class="highlight"><code class="latex"><span class="hljs-keyword">\includegraphics</span>[page=1,width=.5<span class="hljs-keyword">\textwidth</span>]&#123;source/main.pdf&#125;</code></pre><p>配合<code>figure</code>环境使用即可。<ins>test</ins> <s>test</s></p><p>如果使用<code>\includepdf&#123;&#125;</code>的话会将该图片单独放到一页上好像（或者可能是我没有指定大小导致的？）</p><ul><li>上一条中所用的方法如果不是有类似于&quot;宋体&quot;之类的中文字体的话或许也可以通过以下方法插入latex中：</li></ul><pre class="highlight"><code class="latex"><span class="hljs-keyword">\usepackage</span>[inkscapelatex=false]&#123;svg&#125;<span class="hljs-keyword">\newcommand</span>&#123;<span class="hljs-keyword">\executeiffilenewer</span>&#125;[3]&#123; <span class="hljs-comment">%</span> <span class="hljs-keyword">\ifnum</span><span class="hljs-keyword">\pdfstrcmp</span>&#123;<span class="hljs-keyword">\pdffilemoddate</span>&#123; <span class="hljs-params">#1</span>&#125;&#125;<span class="hljs-comment">%</span> &#123;<span class="hljs-keyword">\pdffilemoddate</span>&#123; <span class="hljs-params">#2</span>&#125;&#125;&gt;0<span class="hljs-comment">%</span> &#123;<span class="hljs-keyword">\immediate</span><span class="hljs-keyword">\write</span>18&#123; <span class="hljs-params">#3</span>&#125;&#125;<span class="hljs-keyword">\fi</span><span class="hljs-comment">%</span>&#125;<span class="hljs-keyword">\newcommand</span>&#123;<span class="hljs-keyword">\includesvg</span>&#125;[1]&#123; <span class="hljs-comment">%</span> <span class="hljs-keyword">\executeiffilenewer</span>&#123; <span class="hljs-params">#1</span>.svg&#125;&#123; <span class="hljs-params">#1</span>.pdf&#125;<span class="hljs-comment">%</span> &#123;inkscape -z -D --file=<span class="hljs-params">#1</span>.svg <span class="hljs-comment">%</span> --export-pdf=<span class="hljs-params">#1</span>.pdf --export-latex&#125;<span class="hljs-comment">%</span> <span class="hljs-keyword">\input</span>&#123; <span class="hljs-params">#1</span>.pdf<span class="hljs-built_in">_</span>tex&#125;<span class="hljs-comment">%</span>&#125;<span class="hljs-keyword">\begin</span>&#123;figure&#125;<span class="hljs-keyword">\centering</span>  <span class="hljs-keyword">\executeiffilenewer</span>&#123;source/main.svg&#125;&#123;image-normal.pdf&#125;&#123;inkscape -z -D --file=source/main.svg --export-pdf=image-normal.pdf&#125;  <span class="hljs-keyword">\includegraphics</span>[width=<span class="hljs-keyword">\columnwidth</span>]&#123;image-normal.pdf&#125;  <span class="hljs-keyword">\caption</span>&#123;The test SVG image, as it is seen in Inkscape (exported to PDF .&#125;  <span class="hljs-keyword">\label</span>&#123;fig:normal&#125; <span class="hljs-keyword">\end</span>&#123;figure&#125;</code></pre><blockquote><p>References:</p><p><a href="https://tex.stackexchange.com/questions/57746/includepdf-as-a-figure">Includepdf as a figure</a></p><p><a href="https://www.zhihu.com/question/38707974">rgba四个数值分别是什么意思？</a></p><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial/Fills_and_Strokes">svg教程-填充和边框</a></p><p><a href="https://zhuanlan.zhihu.com/p/359081998">Latex 插入矢量图</a></p><p><a href="https://tex.stackexchange.com/questions/2099/how-to-include-svg-diagrams-in-latex">How to include SVG diagrams in LaTeX?</a></p></blockquote>]]></content:encoded>
       
       
-      <category domain="https://yuxinli1.github.io/blog/categories/Latex/">Latex</category>
+      <category domain="https://yuxinli1.github.io/categories/Latex/">Latex</category>
       
-      <category domain="https://yuxinli1.github.io/blog/categories/Latex/lat/">lat</category>
-      
-      
-      <category domain="https://yuxinli1.github.io/blog/tags/Latex1/">Latex1</category>
-      
-      <category domain="https://yuxinli1.github.io/blog/tags/%E6%8E%92%E7%89%88/">排版</category>
+      <category domain="https://yuxinli1.github.io/categories/Latex/lat/">lat</category>
       
       
-      <comments>https://yuxinli1.github.io/blog/2022/08/17/Svg%E6%8F%92%E5%85%A5Latex%E5%90%8E%E6%89%80%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/#disqus_thread</comments>
+      <category domain="https://yuxinli1.github.io/tags/Latex1/">Latex1</category>
+      
+      <category domain="https://yuxinli1.github.io/tags/%E6%8E%92%E7%89%88/">排版</category>
+      
+      
+      <comments>https://yuxinli1.github.io/2022/08/17/Svg%E6%8F%92%E5%85%A5Latex%E5%90%8E%E6%89%80%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/#disqus_thread</comments>
       
     </item>
     
